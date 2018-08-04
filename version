@@ -1,6 +1,6 @@
-===================================
- Device            : ##DEVICE##
- Kernel Version    : ##VERSION##
- Build date        : ##DATE##
- Developer         : Siddhant Naik
-===================================
+============================
+ Device     : ##DEVICE##
+ Version    : ##VERSION##
+ Date       : ##DATE##
+ Developer  : Siddhant Naik
+============================

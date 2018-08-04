@@ -27,6 +27,32 @@ ramdisk_compression=auto;
 dump_boot;
 
 
+# Disable Forced Encryption
+ui_print " ";
+ui_print "Disabling forceencryption...";
+patch_fstab fstab.samsungexynos7870 /data ext4 flags "wait,check,forceencrypt=footer" "wait,check,encryptable=footer";
+
+# Disable Samsung Shits
+ui_print " ";
+ui_print "Disabling useless samsung stuff...";
+insert_line default.prop "ro.config.tima=0" after "ro.zygote=zygote32" "ro.config.tima=0";
+insert_line default.prop "ro.security.vaultkeeper.feature=0" after "ro.config.tima=0" "ro.security.vaultkeeper.feature=0";
+insert_line default.prop "ro.securestorage.support=false" after "ro.security.vaultkeeper.feature=0" "ro.securestorage.support=false";
+insert_line default.prop "ro.config.dmverity=false" after "ro.securestorage.support=false" "ro.config.dmverity=false";
+insert_line default.prop "ro.config.rkp=false" after "ro.config.dmverity=false" "ro.config.rkp=false";
+insert_line default.prop "ro.config.kap=false" after "ro.config.rkp=false" "ro.config.kap=false";
+
+ui_print " ";
+ui_print "Fixing some issues...";
+umount /system;
+mount -o rw -t auto /system;
+rm -rf /system/priv-app/KLMSAgent;
+rm -rf /system/app/mcRegistry/ffffffffd0000000000000000000000a.tlbin;
+rm -rf /system/vendor/lib/libsecure_storage.so;
+cp /tmp/anykernel/tools/libsecure_storage.so /system/vendor/lib/libsecure_storage.so;
+chmod 644 /system/vendor/lib/libsecure_storage.so;
+umount /system;
+
 # Enable Spectrum Support
 ui_print " ";
 ui_print "Setting Up Spectrum...";
